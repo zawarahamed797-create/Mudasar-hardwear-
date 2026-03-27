@@ -3,96 +3,325 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mudasar Hardware Store</title>
+    <title>Mudasar Hardware Store - Premium Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #2c3e50; --accent: #e67e22; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f4f4; text-align: center; }
-        header { background: var(--primary); color: white; padding: 20px; }
-        
-        .container { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; }
-        
-        /* Product Card Style */
-        .product-card { 
-            background: white; border-radius: 8px; margin: 10px; padding: 15px; 
-            width: 250px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+        /* Modern CSS Variables & Reset */
+        :root { 
+            --primary: #1a1a1a; /* Dark Blue-Black for Header */
+            --accent: #e74c3c;  /* Reddish-Orange for Buttons/Highlights */
+            --bg-color: #f9f9f9;
+            --text-dark: #333;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
         }
-        .product-card img { width: 100%; height: 180px; object-fit: cover; border-radius: 5px; }
-        .product-card h3 { margin: 10px 0; font-size: 1.2rem; }
-        .price { color: #27ae60; font-weight: bold; font-size: 1.1rem; }
-        
-        button { 
-            background: var(--accent); color: white; border: none; padding: 10px 15px; 
-            cursor: pointer; border-radius: 5px; margin-top: 10px; width: 100%;
-        }
-        button:hover { opacity: 0.9; }
 
-        /* Cart Section */
-        #cart-section { 
-            background: white; padding: 20px; margin: 20px auto; max-width: 600px; 
-            border-top: 5px solid var(--accent); border-radius: 8px;
+        body { font-family: 'Poppins', 'Segoe UI', sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-dark); }
+        
+        /* --- HEADER & LOGO --- */
+        header { 
+            background: white; 
+            padding: 15px 50px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky; top: 0; z-index: 1000;
         }
-        .cart-item { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 5px 0; }
-        .summary { margin-top: 20px; font-size: 1.1rem; text-align: left; }
-        .whatsapp-btn { background: #25D366; font-weight: bold; font-size: 1.2rem; }
+        .logo { font-size: 1.8rem; font-weight: 800; color: var(--primary); text-transform: uppercase; text-decoration: none; display: flex; align-items: center; }
+        .logo i { color: var(--accent); margin-right: 10px; } /* Icon */
+        
+        .nav-links a { text-decoration: none; color: #555; margin-left: 20px; font-weight: 500; transition: var(--transition); }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- SLIDING BANNER (HERO SECTION) --- */
+        .slider-container {
+            width: 100%;
+            height: 400px; /* Adjust height */
+            overflow: hidden;
+            position: relative;
+        }
+        .slides {
+            display: flex;
+            width: 300%; /* Total slides * 100% */
+            height: 100%;
+            transition: transform 0.8s ease-in-out;
+        }
+        .slide {
+            width: 33.33%; /* 100 / Total slides */
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        /* Add a dark overlay on images for text contrast */
+        .slide::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .slide-content { 
+            position: relative; z-index: 2; color: white; text-align: center; max-width: 600px;
+            padding: 20px;
+        }
+        .slide-content h2 { font-size: 3rem; margin-bottom: 10px; }
+        .slide-content p { font-size: 1.2rem; }
+
+        /* Banner Slider Navigation (Optional) */
+        .slider-nav { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 3; }
+        .slider-nav span { width: 12px; height: 12px; background: rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; transition: var(--transition); }
+        .slider-nav span.active { background: var(--accent); transform: scale(1.2); }
+
+        /* --- MAIN CONTENT & PRODUCTS --- */
+        .main-container { padding: 50px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h2 { font-size: 2.2rem; color: var(--primary); }
+        .section-title .underline { width: 80px; height: 4px; background: var(--accent); margin: 10px auto; border-radius: 2px; }
+
+        .products-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 25px; 
+        }
+
+        /* Modern Product Card Style */
+        .product-card { 
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            transition: var(--transition); 
+            border: 1px solid #eee;
+            position: relative;
+        }
+        .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow); border-color: transparent; }
+        
+        .product-image-container { width: 100%; height: 220px; overflow: hidden; }
+        .product-card img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .product-card:hover img { transform: scale(1.05); }
+
+        .product-info { padding: 20px; text-align: left; }
+        .product-card h3 { margin: 0 0 10px; font-size: 1.25rem; color: var(--primary); font-weight: 600; }
+        
+        .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+        .price { color: #27ae60; font-weight: bold; font-size: 1.3rem; }
+        
+        .add-btn { 
+            background: #fff; color: var(--accent); border: 2px solid var(--accent);
+            padding: 8px 15px; cursor: pointer; border-radius: 25px; 
+            font-weight: 600; font-size: 0.9rem; transition: var(--transition);
+        }
+        .add-btn:hover { background: var(--accent); color: white; }
+
+        /* --- CART SECTION (Bottom Banner Style) --- */
+        #cart-section { 
+            position: fixed; bottom: -100%; left: 0; width: 100%;
+            background: white; border-top: 5px solid var(--accent); border-radius: 15px 15px 0 0;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.15);
+            transition: bottom 0.5s ease-in-out; z-index: 999;
+            padding: 20px; box-sizing: border-box;
+        }
+        #cart-section.open { bottom: 0; }
+        
+        #cart-items { max-height: 150px; overflow-y: auto; margin-bottom: 15px; }
+        .cart-item { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 10px 0; }
+        
+        .cart-summary-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; text-align: center; margin-bottom: 15px; }
+        .cart-summary-row div { background: #f4f4f4; padding: 10px 20px; border-radius: 8px; flex: 1; min-width: 150px; }
+        .cart-summary-row div b { font-size: 1.2rem; display: block; }
+        
+        .checkout-row { display: flex; justify-content: space-between; align-items: center; }
+        .whatsapp-btn { background: #25D366; color: white; border: none; padding: 12px 30px; font-size: 1.1rem; border-radius: 5px; cursor: pointer; display: flex; align-items: center; text-decoration: none; }
+        .whatsapp-btn i { margin-right: 10px; font-size: 1.3rem; }
+        .close-cart { background: none; border: none; color: #888; cursor: pointer; font-size: 1.5rem; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header { padding: 10px 20px; flex-direction: column; }
+            .nav-links { display: none; } /* Mobile main menu hide */
+            .slide-content h2 { font-size: 2rem; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 15px; }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Mudasar Hardware Store</h1>
-    <p>Behtreen Quality, Behtreen Daam</p>
+    <a href="#" class="logo">
+        <i class="fas fa-tools"></i> MUDASAR HARDWARE
+    </a>
+    <nav class="nav-links">
+        <a href="#products">Hamaray Products</a>
+        <a href="#cart-section">Aapka Cart</a>
+    </nav>
 </header>
 
-<div class="container">
-    <div class="product-card">
-        <img src="https://via.placeholder.com/200" alt="Hathora">
-        <h3>Steel Hathora (Hammer)</h3>
-        <p class="price">Rs. 500</p>
-        <button onclick="addToCart('Steel Hathora', 500)">Add to Cart</button>
+<div class="slider-container">
+    <div class="slides" id="slides">
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1510931599813-05f32a3f789e?q=80&w=1920&auto=format&fit=crop');">
+            <div class="slide-content">
+                <h2>Asli Quality.</h2>
+                <p>Behtreen tools, sasti qeemat par.</p>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1599146914565-d4c82531d030?q=80&w=1920&auto=format&fit=crop');">
+            <div class="slide-content">
+                <h2>Bharoose Mand Naam.</h2>
+                <p>Har qisam ke hardware ke expert.</p>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?q=80&w=1920&auto=format&fit=crop');">
+            <div class="slide-content">
+                <h2>Order Karein!</h2>
+                <p>Baqi payment Cash on Delivery.</p>
+            </div>
+        </div>
     </div>
-    <div class="product-card">
-        <img src="https://via.placeholder.com/200" alt="Screw Driver">
-        <h3>Screw Driver Set</h3>
-        <p class="price">Rs. 1200</p>
-        <button onclick="addToCart('Screw Driver Set', 1200)">Add to Cart</button>
+    <div class="slider-nav">
+        <span class="dot active" onclick="currentSlide(0)"></span>
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+    </div>
+</div>
+
+<div class="main-container" id="products">
+    <div class="section-title">
+        <h2>Top Selling Products</h2>
+        <div class="underline"></div>
     </div>
 
-    <div class="product-card">
-        <img src="https://via.placeholder.com/200" alt="Drill Machine">
-        <h3>Power Drill Machine</h3>
-        <p class="price">Rs. 4500</p>
-        <button onclick="addToCart('Power Drill Machine', 4500)">Add to Cart</button>
+    <div class="products-grid">
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://images.unsplash.com/photo-1534120247760-c44c3e4a62f1?q=80&w=600" alt="Hathora">
+            </div>
+            <div class="product-info">
+                <h3>Steel Hathora (Hammer)</h3>
+                <p style="color:#777; font-size:0.9rem;">Heavy Duty, unbreakable handle.</p>
+                <div class="price-row">
+                    <span class="price">Rs. 850</span>
+                    <button class="add-btn" onclick="addToCart('Steel Hathora', 850)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://images.unsplash.com/photo-1621217646633-89912c96c561?q=80&w=600" alt="Screw Drivers">
+            </div>
+            <div class="product-info">
+                <h3>Screw Driver Set (12pcs)</h3>
+                <p style="color:#777; font-size:0.9rem;">Magnetic tips, ergonomic grip.</p>
+                <div class="price-row">
+                    <span class="price">Rs. 1800</span>
+                    <button class="add-btn" onclick="addToCart('Screw Drivers', 1800)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://images.unsplash.com/photo-1606821437648-261bd766a506?q=80&w=600" alt="Drill Machine">
+            </div>
+            <div class="product-info">
+                <h3>Power Drill Machine</h3>
+                <p style="color:#777; font-size:0.9rem;">500W, variable speed.</p>
+                <div class="price-row">
+                    <span class="price">Rs. 5500</span>
+                    <button class="add-btn" onclick="addToCart('Power Drill Machine', 5500)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image-container">
+                <img src="https://via.placeholder.com/300x220?text=Aapki+Tasveer" alt="Wrench Set">
+            </div>
+            <div class="product-info">
+                <h3>Naya Item 1</h3>
+                <p style="color:#777; font-size:0.9rem;">Description yahan likhein.</p>
+                <div class="price-row">
+                    <span class="price">Rs. 2500</span>
+                    <button class="add-btn" onclick="addToCart('Wrench Set', 2500)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <div id="cart-section">
-    <h2>Aapka Cart</h2>
-    <div id="cart-items"></div>
-    
-    <div class="summary">
-        <p>Total Bill: <b>Rs. <span id="total-price">0</span></b></p>
-        <p>Advance (50%): <b style="color:red;">Rs. <span id="advance-price">0</span></b></p>
-        <p>Baqi (Cash on Delivery): <b>Rs. <span id="cod-price">0</span></b></p>
+    <div class="checkout-row" style="border-bottom: 2px solid #f4f4f4; padding-bottom: 10px; margin-bottom: 10px;">
+        <h2 style="margin:0;">Aapki Kharidari</h2>
+        <button class="close-cart" onclick="toggleCart()">&times;</button>
     </div>
     
-    <button class="whatsapp-btn" onclick="sendToWhatsApp()">Order on WhatsApp</button>
+    <div id="cart-items"></div>
+    
+    <div class="cart-summary-row">
+        <div>Total: <b>Rs. <span id="total-price">0</span></b></div>
+        <div style="color:var(--accent);">Advance (50%): <b>Rs. <span id="advance-price">0</span></b></div>
+        <div>Baqi (COD): <b>Rs. <span id="cod-price">0</span></b></div>
+    </div>
+    
+    <div class="checkout-row" style="justify-content: center;">
+        <button class="whatsapp-btn" onclick="sendToWhatsApp()">
+            <i class="fab fa-whatsapp"></i> Confirm Order on WhatsApp
+        </button>
+    </div>
 </div>
 
 <script>
+    // --- Banner Slider JavaScript ---
+    let currentSlideIndex = 0;
+    const slidesContainer = document.getElementById('slides');
+    const dots = document.querySelectorAll('.dot');
+    const totalSlides = 3;
+
+    function showSlide(index) {
+        if (index >= totalSlides) index = 0;
+        if (index < 0) index = totalSlides - 1;
+        
+        slidesContainer.style.transform = `translateX(-${index * 33.33}%)`;
+        
+        // Update dots
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[index].classList.add('active');
+        
+        currentSlideIndex = index;
+    }
+
+    function currentSlide(index) {
+        showSlide(index);
+    }
+
+    // Auto Advance Slides every 5 seconds
+    setInterval(() => {
+        showSlide(currentSlideIndex + 1);
+    }, 5000);
+
+    // --- Cart JavaScript ---
     let cart = [];
     let total = 0;
+
+    function toggleCart() {
+        document.getElementById('cart-section').classList.toggle('open');
+    }
 
     function addToCart(name, price) {
         cart.push({name, price});
         total += price;
         updateCartUI();
+        // Automatically open cart when item is added
+        if (!document.getElementById('cart-section').classList.contains('open')) {
+            toggleCart();
+        }
     }
 
     function updateCartUI() {
         const cartDiv = document.getElementById('cart-items');
         cartDiv.innerHTML = '';
         
-        cart.forEach((item, index) => {
+        cart.forEach((item) => {
             cartDiv.innerHTML += `<div class="cart-item"><span>${item.name}</span> <span>Rs. ${item.price}</span></div>`;
         });
 
@@ -103,21 +332,23 @@
 
     function sendToWhatsApp() {
         if(cart.length === 0) {
-            alert("Cart khali hai!");
+            alert("Aapka cart khali hai!");
             return;
         }
 
-        let phoneNumber = "923001234567"; // <-- Yahan apna WhatsApp number likhein
+        let phoneNumber = "923488222368"; // <-- Yahan apna WhatsApp number likhein (eg: 923000000000)
         let message = "*Naya Order - Mudasar Hardware Store*%0A%0A";
         
         cart.forEach((item, i) => {
             message += `${i+1}. ${item.name} - Rs. ${item.price}%0A`;
         });
 
+        message += `%0A━━━━━━━━━━━━━━━━━━`;
         message += `%0A*Total Bill:* Rs. ${total}`;
         message += `%0A*Advance (50%):* Rs. ${total * 0.5}`;
-        message += `%0A*Cash on Delivery:* Rs. ${total * 0.5}`;
-        message += `%0A%0ABraye Meharbani order confirm karein.`;
+        message += `%0A*Cash on Delivery (Baqi):* Rs. ${total * 0.5}`;
+        message += `%0A━━━━━━━━━━━━━━━━━━`;
+        message += `%0A%0ABraye Meharbani mera order confirm karein.`;
 
         window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
     }
@@ -125,4 +356,3 @@
 
 </body>
 </html>
-
