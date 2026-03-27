@@ -3,157 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mudasar Hardware Store</title>
+    <title>Mudasar Hardware Store - All Hardware & Accessories Fittings</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primary: #1e272e; --accent: #f39c12; --bg: #f1f2f6; --success: #27ae60; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); color: #2f3542; }
         
-        header { background: var(--primary); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 24px; font-weight: bold; color: var(--accent); text-decoration: none; }
+        /* Header */
+        header { background: var(--primary); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .logo { font-size: 24px; font-weight: bold; color: var(--accent); text-decoration: none; letter-spacing: 1px; }
+        .contact-top { font-size: 14px; font-weight: 500; }
 
-        .hero { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1581147036324-c17ac41dfa6c?q=80&w=1200'); height: 150px; background-size: cover; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; }
+        /* Hero Banner */
+        .hero { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1581147036324-c17ac41dfa6c?q=80&w=1200'); height: 200px; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
+        .hero h1 { margin: 0; font-size: 2rem; }
 
-        .container { max-width: 1100px; margin: 20px auto; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        /* LOADING / TRANSPORT SECTION */
+        .transport-container { max-width: 1000px; margin: 20px auto; padding: 0 20px; }
+        .transport-box { background: #fff3cd; border: 2px dashed #856404; padding: 15px; border-radius: 12px; }
+        .transport-header { border-bottom: 1px solid #d1b87a; padding-bottom: 10px; margin-bottom: 15px; font-weight: bold; color: #856404; }
+        .driver-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; }
+        .driver-card { background: white; padding: 10px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e0e0e0; }
+        .driver-info b { display: block; color: #333; }
+        .driver-info span { font-size: 12px; color: #666; }
+        .btn-call { background: #856404; color: white; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; transition: 0.3s; }
+        .btn-call:hover { background: #5d4604; }
+
+        /* Products Section */
+        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+        .section-title { border-left: 5px solid var(--accent); padding-left: 15px; margin-bottom: 25px; font-size: 22px; font-weight: bold; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
         
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; padding-bottom: 15px; }
-        .card img { width: 100%; height: 180px; object-fit: cover; }
-        .btn-add { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; position: relative; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-body { padding: 20px; }
+        .card-title { font-size: 18px; margin: 0; font-weight: 700; color: var(--primary); }
+        .card-desc { font-size: 13px; color: #777; margin: 8px 0; min-height: 35px; }
+        .card-price { color: var(--success); font-weight: 800; font-size: 22px; margin: 10px 0; }
+        .btn-add { width: 100%; background: var(--accent); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 15px; transition: 0.3s; }
+        .btn-add:hover { background: #d38312; }
 
-        /* Cart Panel */
-        #cart-panel { position: fixed; right: -400px; top: 0; width: 350px; height: 100%; background: white; shadow: -5px 0 15px rgba(0,0,0,0.2); transition: 0.4s; z-index: 2000; padding: 20px; display: flex; flex-direction: column; box-sizing: border-box; }
+        /* Sidebar Cart Panel */
+        #cart-panel { position: fixed; right: -400px; top: 0; width: 380px; height: 100%; background: white; box-shadow: -10px 0 30px rgba(0,0,0,0.2); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2000; padding: 25px; display: flex; flex-direction: column; box-sizing: border-box; }
         #cart-panel.active { right: 0; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding: 10px 0; }
-        .qty-btn { background: #eee; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; font-weight: bold; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f2f6; padding-bottom: 15px; }
+        .cart-items-list { flex-grow: 1; overflow-y: auto; margin-top: 20px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f1f2f6; font-weight: 500; }
         
-        .cart-btn-float { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 24px; }
-        .cart-count { position: absolute; top: 0; right: 0; background: var(--accent); color: white; width: 20px; height: 20px; border-radius: 50%; font-size: 12px; display: flex; justify-content: center; align-items: center; }
+        /* Quantity Controls Styling */
+        .qty-controls { display: flex; align-items: center; gap: 8px; }
+        .qty-btn { background: #eee; border: none; padding: 2px 8px; cursor: pointer; border-radius: 4px; font-weight: bold; }
+        .qty-btn:hover { background: #ddd; }
+        .remove-item { color: #e74c3c; cursor: pointer; font-size: 12px; border: 1px solid #e74c3c; padding: 2px 5px; border-radius: 4px; margin-left: 10px; }
         
-        .whatsapp-btn { background: #25D366; color: white; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; display: block; margin-top: 20px; font-weight: bold; }
+        .summary-box { background: #f8f9fa; padding: 20px; border-radius: 12px; margin-top: 20px; border: 1px solid #e9ecef; }
+        .summary-box p { display: flex; justify-content: space-between; margin: 8px 0; font-size: 15px; }
+        .shipping-alert { background: #e8f4fd; color: #2980b9; padding: 10px; border-radius: 6px; font-size: 12px; line-height: 1.4; margin-top: 10px; }
+        
+        .whatsapp-btn { background: #25D366; color: white; text-align: center; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px; font-size: 17px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); }
+
+        .cart-btn-float { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1500; box-shadow: 0 5px 20px rgba(0,0,0,0.3); font-size: 24px; }
+        .cart-count { position: absolute; top: 0; right: 0; background: var(--accent); color: white; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; display: flex; justify-content: center; align-items: center; font-weight: bold; border: 2px solid var(--primary); }
+
+        @media (max-width: 500px) { #cart-panel { width: 100%; right: -100%; } }
     </style>
 </head>
 <body>
 
 <header>
     <a href="#" class="logo">MUDASAR HARDWARE</a>
-    <div><i class="fas fa-phone"></i> +92 321 7742445</div>
+    <div class="contact-top"><i class="fas fa-phone-alt"></i> Store: +92 321 7742445</div>
 </header>
 
 <div class="hero">
-    <h1>Hardware & Fittings</h1>
-    <p>Wholesale Rates Store</p>
+    <h1>All Wood works Hardware</h1>
+    <p>Premium Hardware & Fittings | Whole Sale Rate</p>
+</div>
+
+<div class="transport-container">
+    <div class="transport-box">
+        <div class="transport-header">
+            <i class="fas fa-truck-loading"></i> Gari / Loading Walay (Karya Khud Final Karein)
+        </div>
+        <div class="driver-grid">
+            <div class="driver-card">
+                <div class="driver-info">
+                    <b>Aslam Khan</b>
+                    <span>Loading Rickshaw (Local)</span>
+                </div>
+                <a href="tel:03001111111" class="btn-call"><i class="fas fa-phone"></i> Call</a>
+            </div>
+            <div class="driver-card">
+                <div class="driver-info">
+                    <b>Irfan Jutt</b>
+                    <span>Loading Rickshaw</span>
+                </div>
+                <a href="tel:03002222222" class="btn-call"><i class="fas fa-phone"></i> Call</a>
+            </div>
+            <div class="driver-card">
+                <div class="driver-info">
+                    <b>Riaz Ahmad</b>
+                    <span>Loading Rickshaw</span>
+                </div>
+                <a href="tel:03003333333" class="btn-call"><i class="fas fa-phone"></i> Call</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="container">
+    <div class="section-title">New Arrival Products</div>
+    
     <div class="grid">
         <div class="card">
             <img src="2×6.jpg" alt="Screws">
-            <h3>Screws 2×6</h3>
-            <p>Rs. 250 (Box)</p>
-            <button class="btn-add" onclick="addToCart('Screws 2×6', 250)">Add to Cart</button>
+            <div class="card-body">
+                <h3 class="card-title"> Screws 2×6 (1 Box)</h3>
+                <p class="card-desc">High quality black screws for MDF & Chipboard.</p>
+                <div class="card-price">Rs. 250</div>
+                <button class="btn-add" onclick="addToCart('Sheet Screws Box', 250)">Add to Cart</button>
+            </div>
         </div>
+
         <div class="card">
-            <img src="https://images.unsplash.com/photo-1622350831002-3f86e3444053?w=400" alt="Hinges">
-            <h3>Auto Hinges (Qabzy)</h3>
-            <p>Rs. 580 (Pair)</p>
-            <button class="btn-add" onclick="addToCart('Auto Hinges', 580)">Add to Cart</button>
+            <img src="https://images.unsplash.com/photo-1622350831002-3f86e3444053?q=80&w=400" alt="Qabzy">
+            <div class="card-body">
+                <h3 class="card-title">Auto Qabzy (Hinges)</h3>
+                <p class="card-desc">Hydraulic slow-close hinges (1 Pair).</p>
+                <div class="card-price">Rs. 580</div>
+                <button class="btn-add" onclick="addToCart('Auto Qabzy Pair', 580)">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1590470249138-be14ff53d5cf?q=80&w=400" alt="Handles">
+            <div class="card-body">
+                <h3 class="card-title">Drawer Slides (Channal)</h3>
+                <p class="card-price">Rs. 1,900</p>
+                <p class="card-desc">Full extension ball bearing slides (18 Inch).</p>
+                <button class="btn-add" onclick="addToCart('Drawer Slides 18in', 1900)">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1590470249138-be14ff53d5cf?q=80&w=400" alt="Handles">
+            <div class="card-body">
+                <h3 class="card-title">Drawer Slides (Channal)</h3>
+                <p class="card-price">Rs. 1,900</p>
+                <p class="card-desc">Full extension ball bearing slides (18 Inch).</p>
+                <button class="btn-add" onclick="addToCart('Drawer Slides 18in', 1900)">Add to Cart</button>
+            </div>
         </div>
     </div>
 </div>
-
-<div class="cart-btn-float" onclick="toggleCart(true)">
+    
+<div class="cart-btn-float" onclick="toggleCart()">
     <i class="fas fa-shopping-cart"></i>
-    <span class="cart-count">0</span>
+    <div class="cart-count" id="count">0</div>
 </div>
 
 <div id="cart-panel">
-    <div style="display:flex; justify-content: space-between; align-items: center;">
-        <h2>Aapka Cart</h2>
-        <button onclick="toggleCart(false)" style="border:none; background:none; font-size:20px; cursor:pointer;">&times;</button>
+    <div class="cart-header">
+        <h2 style="margin:0;"><i class="fas fa-shopping-basket"></i> Aapka Cart</h2>
+        <button onclick="toggleCart()" style="border:none; background:none; font-size:30px; cursor:pointer; color:#888;">&times;</button>
     </div>
     
-    <div class="cart-items-list" style="flex-grow:1; overflow-y:auto;">
+    <div class="cart-items-list" id="cart-list"></div>
+    
+    <div class="summary-box">
+        <p>Saman Ka Total: <b>Rs. <span id="total">0</span></b></p>
+        <p style="color: var(--accent);">Advance Payment (50%): <b>Rs. <span id="adv">0</span></b></p>
+        <p>Cash on Delivery (Baqi): <b>Rs. <span id="cod">0</span></b></p>
+        
+        <div class="shipping-alert">
+            <i class="fas fa-info-circle"></i> <b>Shipping/Karya Note:</b> Karya shamil nahi hai. Transport walon se rabta kar ke karya final karein.
         </div>
-
-    <div style="background:#f9f9f9; padding:15px; border-radius:8px;">
-        <p>Total: <b id="total-price">Rs. 0</b></p>
-        <p>Advance (50%): <b id="advance-price">Rs. 0</b></p>
-        <a href="javascript:void(0)" class="whatsapp-btn" onclick="sendWhatsApp()">Confirm on WhatsApp</a>
     </div>
+    
+    <a href="javascript:void(0)" class="whatsapp-btn" onclick="sendWhatsApp()">
+        <i class="fab fa-whatsapp"></i> Confirm Order on WhatsApp
+    </a>
 </div>
 
 <script>
     let cart = [];
 
-    function addToCart(name, price) {
-        // Check agar item pehle se hai
-        let existingItem = cart.find(item => item.name === name);
-
-        if (existingItem) {
-            existingItem.quantity += 1; // 2 bar click karne se quantity barhay gi
-        } else {
-            cart.push({ name: name, price: price, quantity: 1 });
-        }
-        updateUI();
-        toggleCart(true);
+    function toggleCart() {
+        document.getElementById('cart-panel').classList.toggle('active');
     }
 
-    function changeQty(index, delta) {
+    function addToCart(name, price) {
+        // Find if item already exists in cart
+        let item = cart.find(i => i.name === name);
+        
+        if (item) {
+            item.quantity += 1;
+        } else {
+            cart.push({name, price, quantity: 1});
+        }
+        
+        updateUI();
+        if(!document.getElementById('cart-panel').classList.contains('active')) {
+            toggleCart();
+        }
+    }
+
+    function changeQuantity(index, delta) {
         cart[index].quantity += delta;
         if (cart[index].quantity < 1) {
-            cart.splice(index, 1); // Agar 0 ho jaye to delete kar do
+            cart.splice(index, 1);
         }
+        updateUI();
+    }
+
+    function removeItem(index) {
+        cart.splice(index, 1);
         updateUI();
     }
 
     function updateUI() {
-        const list = document.querySelector('.cart-items-list');
-        const count = document.querySelector('.cart-count');
-        const totalDisp = document.getElementById('total-price');
-        const advDisp = document.getElementById('advance-price');
-
-        list.innerHTML = '';
-        let total = 0;
-        let totalQty = 0;
-
+        const list = document.getElementById('cart-list');
+        const count = document.getElementById('count');
+        list.innerHTML = "";
+        let totalAmount = 0;
+        let totalItems = 0;
+        
         cart.forEach((item, index) => {
-            total += (item.price * item.quantity);
-            totalQty += item.quantity;
+            let itemTotal = item.price * item.quantity;
+            totalAmount += itemTotal;
+            totalItems += item.quantity;
+            
             list.innerHTML += `
                 <div class="cart-item">
-                    <div>
+                    <div style="flex:1;">
                         <b>${item.name}</b><br>
                         <small>Rs. ${item.price}</small>
                     </div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="changeQuantity(${index}, -1)">-</button>
                         <span>${item.quantity}</span>
-                        <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                        <button class="qty-btn" onclick="changeQuantity(${index}, 1)">+</button>
+                        <span class="remove-item" onclick="removeItem(${index})"><i class="fas fa-trash"></i></span>
                     </div>
-                </div>
-            `;
+                </div>`;
         });
-
-        count.innerText = totalQty;
-        totalDisp.innerText = `Rs. ${total}`;
-        advDisp.innerText = `Rs. ${total * 0.5}`;
-    }
-
-    function toggleCart(status) {
-        document.getElementById('cart-panel').classList.toggle('active', status);
+        
+        count.innerText = totalItems;
+        document.getElementById('total').innerText = totalAmount.toLocaleString();
+        document.getElementById('adv').innerText = (totalAmount * 0.5).toLocaleString();
+        document.getElementById('cod').innerText = (totalAmount * 0.5).toLocaleString();
     }
 
     function sendWhatsApp() {
-        if (cart.length === 0) return alert("Cart khali hai!");
-        let text = "Salam Mudasar Hardware! Mera Order:\n\n";
-        cart.forEach(item => {
-            text += `• ${item.name} (${item.quantity} x ${item.price}) = Rs. ${item.price * item.quantity}\n`;
+        if(cart.length === 0) return alert("Pehle kuch saman add karein!");
+        
+        let number = "923217742445"; 
+        let text = "*Naya Order - Mudasar Hardware*%0A";
+        text += "============================%0A";
+        let total = 0;
+        cart.forEach((item, i) => {
+            let itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            text += `${i+1}. ${item.name} (Qty: ${item.quantity}) - Rs. ${itemTotal}%0A`;
         });
-        let total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
-        text += `\n*Total: Rs. ${total}*`;
-        text += `\n*Advance: Rs. ${total * 0.5}*`;
-        window.open(`https://wa.me/923217742445?text=${encodeURIComponent(text)}`);
+        text += "============================%0A";
+        text += `*Saman Total:* Rs. ${total}%0A`;
+        text += `*Advance (50%):* Rs. ${total * 0.5}%0A`;
+        text += `*Cash on Delivery:* Rs. ${total * 0.5}%0A%0A`;
+        text += "*Karya/Shipping:* Negotiable (Zimma Customer)%0A%0A";
+        text += "Braye meharbani mera order confirm kar ke advance ke liye details dein.";
+
+        window.open(`https://wa.me/${number}?text=${text}`, '_blank');
     }
 </script>
 
