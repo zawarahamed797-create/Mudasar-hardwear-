@@ -63,6 +63,21 @@ box-shadow:-10px 0 30px rgba(0,0,0,.2);
 overflow:auto;
 }
 
+/* CLOSE BUTTON */
+#closeCart{
+position:absolute;
+top:10px;
+right:10px;
+background:#111;
+color:white;
+border:none;
+width:30px;
+height:30px;
+border-radius:50%;
+cursor:pointer;
+}
+
+/* PRINT AREA */
 #printArea{
 display:none;
 padding:20px;
@@ -89,6 +104,9 @@ background:white;
 <!-- CART -->
 <div class="cart">
 <h3>Cart</h3>
+
+<button id="closeCart" onclick="closeCart()">×</button>
+
 <div id="cart"></div>
 <p><b>Total: Rs <span id="total">0</span></b></p>
 
@@ -153,6 +171,11 @@ total+=p.price;
 });
 
 document.getElementById("total").innerText=total;
+}
+
+/* CLOSE CART */
+function closeCart(){
+document.querySelector('.cart').style.display='none';
 }
 
 /* BILL GENERATE */
